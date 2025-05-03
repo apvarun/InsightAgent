@@ -14,6 +14,11 @@ import os
 import asyncio
 
 from .tools.get_transactions import get_transactions
+# from .tools.tools import (
+#     get_transactions,
+#     get_spending_summary,
+#     detect_spending_anomalies,
+# )
 
 memory_db = SqliteMemoryDb(table_name="memory", db_file="tmp/memory.db")
 memory = Memory(db=memory_db)
@@ -58,7 +63,9 @@ insight_agent = Agent(
     ),
     tools=[
         # ReasoningTools(add_instructions=True),
-        get_transactions
+        get_transactions,
+        # get_spending_summary,
+        # detect_spending_anomalies,
     ],
     memory=memory,
     enable_agentic_memory=True,
@@ -81,8 +88,8 @@ insight_agent = Agent(
 
     Respond in following format as JSON:
     {
-        "response": "Response generated based on the user prompt", # Should answer user query here
-        "top_transactions": [ # Top 3 Transactions that match the query
+        "response": "Response generated based on the user prompt. do not include transactions here. only a readable summary.", # Should answer user query here
+        "all_transactions": [  # Should return all transactions that match the query here
             {
                 "amount": "amount and currency",
                 "created": "created",
@@ -109,4 +116,3 @@ insight_agent = Agent(
 if __name__ == "__main__":
     print("Loading knowledge base...")
     asyncio.run(knowledge_base.aload(recreate=False, upsert=True))
-

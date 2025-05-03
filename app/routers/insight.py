@@ -1,6 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi import Request
+from bunq.sdk.model.generated.endpoint import InsightApiObject
+
+from app.utils.bunq_api import init_api_context
 
 from ..agents.insight_agent import insight_agent
 
@@ -40,3 +43,17 @@ async def get_insight(request: Request):
         return cleaned_content
 
     return cleaned_content
+
+
+
+@router.get("/overview")
+async def get_insight_data(request: Request):
+    # get query from request params
+    init_api_context()
+
+    insights = InsightApiObject.list({
+        # time_start
+    }).value
+
+    return insights
+
