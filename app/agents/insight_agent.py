@@ -1,18 +1,27 @@
 from agno.agent import Agent
 from agno.models.nvidia import Nvidia
+from agno.models.google import Gemini
+
 from agno.tools.reasoning import ReasoningTools
+
 from .tools.get_transactions import get_transactions
 
+
 insight_agent = Agent(
-    model=Nvidia(
-        id="nvidia/llama-3.1-nemotron-nano-8b-v1",
+    model=Gemini(
+        id="gemini-2.0-flash",
     ),
-    tools=[ReasoningTools(add_instructions=True), get_transactions],
+    reasoning_model=Nvidia(
+        id="deepseek-ai/deepseek-r1-distill-llama-8b",
+    ),
+    tools=[
+        ReasoningTools(add_instructions=True), 
+        get_transactions
+    ],
     instructions="""
     You are an AI assistant that helps with getting insights from bunq transactions.
     You can use the following tools:
     - get_user_transactions: Get User's transactions
-    - reasoning: Reasoning about the transactions
 
     You should use the following format:
     Question: the input question you must answer
@@ -24,7 +33,7 @@ insight_agent = Agent(
     Thought: I now know the final answer
     Final Answer: the final answer to the original input question
 
-    Respond in following format
+    Respond in following format as JSON:
     {
         "response": "Response generated based on the user prompt", # Should answer user query here
         "top_transactions": [ # Top 3 Transactions that match the query
