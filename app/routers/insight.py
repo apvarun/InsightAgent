@@ -24,4 +24,11 @@ async def get_insight(request: Request):
 
     print(response.content)
 
-    return response.content
+    # Remove json code block markers and strip whitespace
+    cleaned_content = response.content.replace("```json", "").replace("```", "").strip()
+    try:
+        return json.loads(cleaned_content)
+    except json.JSONDecodeError:
+        return cleaned_content
+
+    return cleaned_content
