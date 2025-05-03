@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
 from fastapi import Request
-from bunq.sdk.model.generated.endpoint import InsightApiObject
+from bunq.sdk.model.generated.endpoint import InsightApiObject, PaymentApiObject
 
 from app.utils.bunq_api import init_api_context
 
@@ -19,7 +19,6 @@ router = APIRouter(
 
 @router.get("/")
 async def get_insight(request: Request):
-
     # get query from request params
     query = request.query_params.get("query")
     user_id = request.query_params.get("user_id") or 1
@@ -45,15 +44,18 @@ async def get_insight(request: Request):
     return cleaned_content
 
 
-
 @router.get("/overview")
 async def get_insight_data(request: Request):
     # get query from request params
     init_api_context()
 
-    insights = InsightApiObject.list({
-        # time_start
-    }).value
+    insights = InsightApiObject.list(
+        {
+            "time_start": "2025-05-01",
+            "time_end": "2025-05-03",
+        }
+    ).value
 
-    return insights
+    transactions = len(PaymentApiObject.list().value)
 
+    return {"insights": insights, "transactions": transactions}
