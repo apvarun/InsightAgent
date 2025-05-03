@@ -2,7 +2,7 @@
 from bunq.sdk.model.generated.endpoint import PaymentApiObject
 from agno.tools import tool
 
-from ...lib.bunq_api import init_api_context
+from app.utils.bunq_api import init_api_context
 
 
 @tool(
