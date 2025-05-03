@@ -165,3 +165,7 @@ cython_debug/
 
 bunq_api_context.conf
 tmp
+
+/scripts
+scraped_pages
+processed_content

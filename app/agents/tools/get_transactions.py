@@ -27,4 +27,5 @@ def get_transactions() -> str:
     transactions = []
     for payment in payments:
         transactions.append(payment.to_json())
+
     return transactions

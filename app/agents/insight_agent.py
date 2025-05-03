@@ -5,10 +5,8 @@ from agno.memory.v2.db.sqlite import SqliteMemoryDb
 from agno.memory.v2.memory import Memory
 from agno.tools.reasoning import ReasoningTools
 from pydantic import BaseModel, Field
-from agno.knowledge.website import WebsiteKnowledgeBase
+from agno.knowledge.text import TextKnowledgeBase
 from agno.embedder.ollama import OllamaEmbedder
-# from agno.vectordb.lancedb import LanceDb
-# from agno.vectordb.search import SearchType
 from agno.vectordb.pineconedb import PineconeDb
 
 import os
@@ -24,13 +22,6 @@ memory = Memory(db=memory_db)
 COLLECTION_NAME = "website-content"
 
 
-# vector_db = LanceDb(
-#     table_name="help_docs",
-#     uri="/tmp/lancedb",
-#     search_type=SearchType.keyword,
-#     embedder=OllamaEmbedder(id="openhermes"),
-# )
-
 vector_db = PineconeDb(
     name="bunq-help",
     dimension=4096,
@@ -44,10 +35,8 @@ vector_db = PineconeDb(
 
 
 # Create a knowledge base with the seed URLs
-knowledge_base = WebsiteKnowledgeBase(
-    urls=["https://together.bunq.com/t/knowledge"],
-    # Number of links to follow from the seed URLs
-    max_links=5,
+knowledge_base = TextKnowledgeBase(
+    path="processed_content",
     # Table name: ai.website_documents
     vector_db=vector_db,
 )
@@ -99,6 +88,8 @@ insight_agent = Agent(
                 "created": "created",
                 "description": "description",
                 "alias": "alias name",
+                "id": "id",
+                "sub_type": "sub_type",
             },
             ...
         ]

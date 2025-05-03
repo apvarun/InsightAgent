@@ -28,7 +28,8 @@ async def get_insight(request: Request):
     print(response.content)
 
     # Remove from <thinking> to </thinking> tags
-    response.content = response.content.split("</thinking>")[1]
+    split_text = response.content.split("</thinking>")
+    response.content = split_text[1] if len(split_text) > 1 else split_text[0]
 
     # Remove json code block markers and strip whitespace
     cleaned_content = response.content.replace("```json", "").replace("```", "").strip()
