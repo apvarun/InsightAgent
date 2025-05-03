@@ -57,7 +57,6 @@ class InsightModel(BaseModel):
 insight_agent = Agent(
     model=Gemini(
         id="gemini-2.0-flash",
-        grounding=True
     ),
     reasoning_model=Nvidia(
         id="deepseek-ai/deepseek-r1-distill-llama-8b",
