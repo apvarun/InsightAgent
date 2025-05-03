@@ -3,6 +3,7 @@ from fastapi.responses import StreamingResponse
 
 from ..agents.insight_agent import insight_agent
 
+import json
 
 router = APIRouter(
     prefix="/insight",
@@ -12,9 +13,8 @@ router = APIRouter(
 )
 
 
-
 @router.get("/")
 async def get_insight():
     response = insight_agent.run("Summarize the top 5 transactions")
-            
-    return response.content
+
+    return json.loads(response.content)
