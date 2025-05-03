@@ -16,6 +16,7 @@ router = APIRouter(
 
 @router.get("/")
 async def get_insight(request: Request):
+
     # get query from request params
     query = request.query_params.get("query")
     user_id = request.query_params.get("user_id") or 1
@@ -26,8 +27,12 @@ async def get_insight(request: Request):
 
     print(response.content)
 
+    # Remove from <thinking> to </thinking> tags
+    response.content = response.content.split("</thinking>")[1]
+
     # Remove json code block markers and strip whitespace
     cleaned_content = response.content.replace("```json", "").replace("```", "").strip()
+
     try:
         return json.loads(cleaned_content)
     except json.JSONDecodeError:

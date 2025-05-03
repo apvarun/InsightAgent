@@ -6,10 +6,18 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "agno>=1.4.3",
+    "beautifulsoup4>=4.13.4",
     "bunq-sdk>=1.28.0",
     "fastapi[standard]>=0.112.1",
     "google-genai>=1.13.0",
+    "lancedb>=0.22.0",
+    "ollama>=0.4.8",
     "openai>=1.77.0",
+    "pinecone<6",
+    "pinecone-text<6",
+    "pypdf>=5.4.0",
+    "qdrant-client>=1.14.2",
     "sqlalchemy>=2.0.40",
+    "tantivy>=0.22.2",
     "uvicorn>=0.30.6",
 ]
