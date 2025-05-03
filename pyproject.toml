@@ -10,4 +10,5 @@ dependencies = [
     "fastapi[standard]>=0.112.1",
     "google-genai>=1.13.0",
     "openai>=1.77.0",
+    "uvicorn>=0.30.6",
 ]
