@@ -18,9 +18,11 @@ router = APIRouter(
 async def get_insight(request: Request):
     # get query from request params
     query = request.query_params.get("query")
+    user_id = request.query_params.get("user_id") or 1
+    session_id = request.query_params.get("session_id") or 1
 
     print(f"Running the query: {query}")
-    response = insight_agent.run(query)
+    response = insight_agent.run(query, user_id=user_id, session_id=session_id)
 
     print(response.content)
 
