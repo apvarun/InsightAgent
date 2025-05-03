@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 
-from .routers import items
+from .routers import insight
 
 app = FastAPI(dependencies=[])
 
 
-app.include_router(items.router)
+app.include_router(insight.router)
 
 
 @app.get("/health")
