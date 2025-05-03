@@ -8,8 +8,7 @@ from ...lib.bunq_api import init_api_context
 @tool(
     name="get_user_transactions",  # Custom name for the tool (otherwise the function name is used)
     description="Get User's transactions",  # Custom description (otherwise the function docstring is used)
-    show_result=True,  # Show result after function call
-    # stop_after_tool_call=True,  # Return the result immediately after the tool call and stop the agent
+    show_result=False,  # Show result after function call
 )
 def get_transactions() -> str:
     """

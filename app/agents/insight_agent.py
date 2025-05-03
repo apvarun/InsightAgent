@@ -12,4 +12,5 @@ insight_agent = Agent(
     """,
     show_tool_calls=True,
     markdown=True,
+    use_json_mode=True,
 )

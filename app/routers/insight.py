@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import StreamingResponse
 
 from ..agents.insight_agent import insight_agent
 
@@ -11,10 +12,9 @@ router = APIRouter(
 )
 
 
+
 @router.get("/")
 async def get_insight():
-
-    insight_agent.print_response("Summarize the top 5 transactions", stream=False)
-
-    return []
-
+    response = insight_agent.run("Summarize the top 5 transactions")
+            
+    return response.content
