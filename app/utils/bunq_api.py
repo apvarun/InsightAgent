@@ -9,7 +9,7 @@ def init_api_context():
     api_context = ApiContext.create(
         ApiEnvironmentType.SANDBOX,  # SANDBOX for testing
         os.getenv("BUNQ_API_KEY"),
-        "My Agent",
+        "Insight Agent",
     )
     api_context.save("bunq_api_context.conf")
 

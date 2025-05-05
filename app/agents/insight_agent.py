@@ -3,7 +3,6 @@ from agno.models.nvidia import Nvidia
 from agno.models.google import Gemini
 from agno.memory.v2.db.sqlite import SqliteMemoryDb
 from agno.memory.v2.memory import Memory
-from agno.tools.reasoning import ReasoningTools
 from pydantic import BaseModel, Field
 from agno.knowledge.text import TextKnowledgeBase
 from agno.embedder.ollama import OllamaEmbedder
@@ -14,11 +13,7 @@ import os
 import asyncio
 
 from .tools.get_transactions import get_transactions
-# from .tools.tools import (
-#     get_transactions,
-#     get_spending_summary,
-#     detect_spending_anomalies,
-# )
+
 
 memory_db = SqliteMemoryDb(table_name="memory", db_file="tmp/memory.db")
 memory = Memory(db=memory_db)
@@ -50,7 +45,7 @@ knowledge_base = TextKnowledgeBase(
 class InsightModel(BaseModel):
     response: str = Field(description="Response generated based on the user prompt")
     top_transactions: list[dict] = Field(
-        description="Top 3 Transactions that match the query"
+        description="Top Transactions that match the query"
     )
 
 
@@ -64,8 +59,6 @@ insight_agent = Agent(
     tools=[
         # ReasoningTools(add_instructions=True),
         get_transactions,
-        # get_spending_summary,
-        # detect_spending_anomalies,
     ],
     memory=memory,
     enable_agentic_memory=True,

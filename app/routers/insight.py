@@ -1,5 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi import APIRouter
 from fastapi import Request
 from bunq.sdk.model.generated.endpoint import InsightApiObject, PaymentApiObject
 
@@ -26,8 +25,6 @@ async def get_insight(request: Request):
 
     print(f"Running the query: {query}")
     response = insight_agent.run(query, user_id=user_id, session_id=session_id)
-
-    print(response.content)
 
     # Remove from <thinking> to </thinking> tags
     split_text = response.content.split("</thinking>")
